@@ -1,0 +1,17 @@
+{
+  "name": "trp-di",
+  "version": "0.0.1",
+  "author": "Thiago Rodrigues de Paula <thiago.rdp@gmail.com>",
+  "description": "A simple dependency manager for node",
+  "main": "./lib/di.js",
+  "scripts": {
+    "test": "mocha --reporter spec --require should"
+  },
+  "dependencies": {
+    "underscore": "~1.5.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "should": "~2.0.2"
+  }
+}
