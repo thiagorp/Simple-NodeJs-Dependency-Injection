@@ -1,6 +1,6 @@
 {
   "name": "trp-di",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Thiago Rodrigues de Paula <thiago.rdp@gmail.com>",
   "description": "A simple dependency manager for node",
   "main": "./lib/di.js",
@@ -13,5 +13,10 @@
   "devDependencies": {
     "mocha": "~1.13.0",
     "should": "~2.0.2"
+  },
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/thiagorp/Simple-NodeJs-Dependency-Injection.git"
   }
 }

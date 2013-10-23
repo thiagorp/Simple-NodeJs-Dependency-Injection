@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Dependency injection module', function() {
-    var mod = require('trp-di');
+    var mod = require('../lib/di');
     var di;
     var noDependencyModule;
     var noDependencyConsumer;
@@ -15,9 +15,7 @@ describe('Dependency injection module', function() {
 
         noDependencyConsumer.$dependencies = ['noDependency'];
 
-        noDependencyModule = function() {
-            return 'noDependencyModule';
-        };
+        noDependencyModule = 'noDependencyModule';
     });
 
     describe('- Module exists', function() {
@@ -26,7 +24,7 @@ describe('Dependency injection module', function() {
         });
     });
 
-    describe('- Module registration', function() {
+    describe('#register()', function() {
         it('should not load the module immediately if all dependencies aren\'t registered yet', function() {
             di.register('noDependencyConsumer', noDependencyConsumer);
             di.isModuleLoaded('noDependencyConsumer').should.not.be.ok;
@@ -48,9 +46,14 @@ describe('Dependency injection module', function() {
             di.register('noDependency', noDependencyModule);
             di.isModuleLoaded('noDependencyConsumer').should.be.ok;
         });
+
+        it('should load the module as it is if there\'s no dependencies (compatiblity with native modules)', function() {
+            di.register('noDependency', require('net'));
+            di.get('noDependency').should.be.equal(require('net'));
+        });
     });
 
-    describe('- Retrieving modules', function() {
+    describe('#get()', function() {
         it('should not retrieve a module that hasn\'t been registered', function() {
             var nonExistent = di.get('nonExistent');
             nonExistent.should.not.be.ok;
