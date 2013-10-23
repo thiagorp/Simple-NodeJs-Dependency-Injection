@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Dependency injection module', function() {
+describe('DI', function() {
     var mod = require('../lib/di');
     var di;
     var noDependencyModule;
@@ -16,12 +16,6 @@ describe('Dependency injection module', function() {
         noDependencyConsumer.$dependencies = ['noDependency'];
 
         noDependencyModule = 'noDependencyModule';
-    });
-
-    describe('- Module exists', function() {
-        it('should be an object', function() {
-            di.should.be.an.Object;
-        });
     });
 
     describe('#register()', function() {
@@ -73,12 +67,28 @@ describe('Dependency injection module', function() {
         });
     });
 
-    describe('- Injection', function() {
+    describe('- Injection system', function() {
         it('should have the dependencies injected after the module is loaded', function() {
             di.register('noDependency', noDependencyModule);
             di.register('noDependencyConsumer', noDependencyConsumer);
             var ndc = di.get('noDependencyConsumer');
             ndc.dependency.should.be.equal('noDependencyModule');
+        });
+
+        it('should inject the mudules in the right order', function(done) {
+            di.register('m1', 1);
+            di.register('m2', 2);
+            di.register('m3', 3);
+
+            var consumerModule = function (m1, m2, m3) {
+                m1.should.be.equal(1);
+                m2.should.be.equal(2);
+                m3.should.be.equal(3);
+                done();
+            };
+            consumerModule.$dependencies = ['m1', 'm2', 'm3'];
+
+            di.register('consumerModule', consumerModule);
         });
     });
 });
